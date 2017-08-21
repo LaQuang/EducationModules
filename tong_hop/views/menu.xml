@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="tong_hop.main_menu" name="Tổng hợp" sequence="0" />
+
+        <menuitem id="tong_hop.dashboard_menu" parent="tong_hop.main_menu" name="Dashboard" action=""/>
+
+        <menuitem id="tong_hop_discuss_menu" parent="tong_hop.main_menu" name="Discuss" action="mail.mail_channel_action_client_chat"/>
+    </data>
+</odoo>

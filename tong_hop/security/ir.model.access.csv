@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tong_hop_tong_hop,tong_hop.tong_hop,model_tong_hop_tong_hop,,1,0,0,0
