@@ -1,0 +1,125 @@
+<?xml version="1.0" ?>
+<odoo>
+    <!-- Bundle (minimal) for embedded slide iframe -->
+    <template id="openeducat_lms.slide_embed_assets" name="Website slides embed assets">
+        <link type="text/less" rel='stylesheet' href='/web/static/src/less/import_bootstrap.less' />
+        <link type="text/less" href="/openeducat_lms/static/src/less/website_slides.less" rel="stylesheet" t-ignore="true" />
+
+        <t t-call="web.pdf_js_lib"></t>
+        <script type="text/javascript" src="/openeducat_lms/static/lib/pdfslidesviewer/PDFSlidesViewer.js"></script>
+        <script type="text/javascript" src="/openeducat_lms/static/src/js/slides_embed.js"></script>
+    </template>
+
+    <!-- This template is the PDF Viewer. It will mostly rendered throught 
+    an iFrame. The js file to bind event is slides_embed.js -->
+    <template id="embed_material" name="Embedded Material Page">
+        <html>
+
+        <head t-if="not private">
+            <title>
+                <t t-esc="material.name" />
+            </title>
+            <t t-call-assets="web.assets_common" t-js="false" />
+            <t t-call-assets="openeducat_lms.slide_embed_assets" t-js="false" />
+            <t t-call-assets="web.assets_common" t-css="false" />
+            <t t-call-assets="openeducat_lms.slide_embed_assets" t-css="false" />
+        </head>
+
+        <body>
+            <div id="PDFViewer" t-if="not private" class="panel panel-default oe_slides_panel">
+                <!-- PDF Viewer Body : contains the canvas, the loader, 
+                    or the image -->
+                <div id="PDFSlideViewer" style="position:relative;" t-attf-data-slideid="#{material.id}" t-attf-data-slideurl="/course/material/#{material.id}/pdf_content" t-att-data-defaultpage="page">
+                    <t t-if="material.material_type in ('presentation', 'document')">
+                        <div id="PDFViewerLoader" class="oe_slides_loader">
+                            <img class="img-responsive" t-attf-src="/web/image/op.material/#{material.id}/image_medium" style="margin:auto;height:100%" />
+                            <h4 class="text-center">
+                                <i class="fa fa-spinner fa-spin"></i>
+                                Loading ...
+                            </h4>
+                        </div>
+                        <canvas id="PDFViewerCanvas" class="img-responsive" style="margin:auto;height:100%;display:none;"></canvas>
+                    </t>
+                    <t t-if="material.material_type in ('infographic')">
+                        <img t-attf-src="/web/image/op.material/#{material.id}/datas" class="img-responsive" style="width:100%" />
+                    </t>
+                </div>
+                <!-- Fixed bottom navbar -->
+                <div class="navbar navbar-default navbar-fixed-bottom" role="navigation" t-if="material.material_type in ('presentation', 'document')">
+                    <div class="container-fluid oe_slides_panel_footer">
+                        <div class="row" style="padding-top:15px;">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
+                                <input type="number" class="text-center" id="page_number"></input>
+                                /
+                                <span id="page_count"></span>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 hide o_slide_navigation_buttons">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center"></div>
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">
+                                    <span id="first" title="First slide">
+                                        <i
+                                            class="fa fa-step-backward fa-2x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">
+                                    <span id="previous" title="Previous slide" role="button">
+                                        <i
+                                            class="fa fa-arrow-circle-left fa-2x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">
+                                    <span id="next" title="Next slide" role="button">
+                                        <i
+                                            class="fa fa-arrow-circle-right fa-2x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">
+                                    <span id="last" title="Last slide" role="button">
+                                        <i
+                                            class="fa fa-step-forward fa-2x"></i>
+                                    </span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center"></div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 pull-right text-right">
+                                <span id="fullscreen" title="View fullscreen">
+                                    <i class="fa fa-arrows-alt fa-2x"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+
+        </html>
+    </template>
+
+    <template id="embed_material_forbidden" name="Forbidden Embedded Slide">
+        <html>
+
+        <head t-if="not private">
+            <title>
+                <t t-esc="material.name" />
+            </title>
+            <t t-call-assets="openeducat_lms.slide_embed_assets" t-js="false" />
+        </head>
+
+        <body>
+            <title>
+                <t t-esc="material.name" />
+            </title>
+            <div class="slide-private-view">
+                <h3 style="border-bottom: 1px solid !important;padding-bottom: 10px;">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    This
+                    <t t-esc="material.material_type" />
+                    is private.
+                </h3>
+            </div>
+        </body>
+
+        </html>
+    </template>
+
+</odoo>

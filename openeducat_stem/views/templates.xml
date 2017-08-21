@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <template id="assets_backend" name="stem_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/openeducat_stem/static/src/js/openeducat_stem.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

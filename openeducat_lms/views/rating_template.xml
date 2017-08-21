@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Product options: OpenChatter -->
+    <template id="rating_card_inherit" inherit_id="rating.rating_card" >
+        <xpath expr="//div[@class='text-center well well-sm']" position='attributes'>
+            <attribute name="class">text-center</attribute>
+        </xpath>
+        <xpath expr="//div[@class='rating']" position='replace'>
+                <!-- popover 'button' -->
+                <ul class="rating list-unstyled" data-placement="bottom" data-toggle="rating-popover">
+                    <li>
+                        <t t-call="rating.rating_star_card">
+                            <t t-set="rating_default_value" t-value="'%.2f' % (rating_stat.get('avg', 0.0),)"/>
+                            <t t-set="rating_disabled" t-value="True"/>
+                        </t>
+                    </li>
+                </ul>
+        </xpath>
+    </template>
+</odoo>

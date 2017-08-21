@@ -1,0 +1,78 @@
+<odoo>
+    <data>
+        <record id="account.view_account_payment_form_inherit" model="ir.ui.view">
+            <field name="name">account.payment.form.inherit</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="x_admission_id" attrs="{'invisible': ['|', ('partner_id', '=', False), ('partner_type', '!=', 'customer')]}" domain="[('partner_id', '=', partner_id)]"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="openeducat_admission.view_op_admission_register_form_inherit" model="ir.ui.view">
+            <field name="name">op.admission.register.form.inherit</field>
+            <field name="model">op.admission.register</field>
+            <field name="inherit_id" ref="openeducat_admission.view_op_admission_register_form"/>
+            <field name="arch" type="xml">
+                <field name="admission_ids" position="inside">
+                    <tree>
+                        <field name="title"/>
+                        <field name="name"/>
+                        <field name="middle_name"/>
+                        <field name="last_name"/>
+                        <field name="application_number"/>
+                        <field name="admission_date"/>
+                        <field name="application_date"/>
+                        <field name="birth_date"/>
+                        <field name="course_id"/>
+                        <field name="batch_id"/>
+                        <field name="x_payment_ids" invisible="1"/>
+                        <field name="x_payment_state" widget="html"/>
+                        <field name="state"/>
+                    </tree>
+                </field>
+            </field>
+        </record>
+
+        <record id="openeducat_admission.view_op_admission_form_inherit" model="ir.ui.view">
+            <field name="name">op.admission.form.inherit</field>
+            <field name="model">op.admission</field>
+            <field name="inherit_id" ref="openeducat_admission.view_op_admission_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page name="payments" string="Payments">
+                        <field name="x_payment_ids" readonly="1"/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="openeducat_attendance.view_op_attendance_line_form_inherit" model="ir.ui.view">
+            <field name="name">op.attendance.line.form.inherit</field>
+            <field name="model">op.attendance.line</field>
+            <field name="inherit_id" ref="openeducat_attendance.view_op_attendance_line_form"/>
+            <field name="arch" type="xml">
+                <field name="attendance_date" position="after">
+                    <field name="x_partner_id" invisible="1"/>
+                    <field name="x_payment_state" widget="html"/>
+                    <field name="x_invoice_id" context="{'form_view_ref': 'account.invoice_form'}" domain="[('partner_id', '=', x_partner_id)]"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="openeducat_attendance.view_op_attendance_sheet_form_inherit" model="ir.ui.view">
+            <field name="name">op.attendance.sheet.form.inherit</field>
+            <field name="model">op.attendance.sheet</field>
+            <field name="inherit_id" ref="openeducat_attendance.view_op_attendance_sheet_form"/>
+            <field name="arch" type="xml">
+                <field name="present" position="after">
+                    <field name="x_payment_state" widget="html"/>
+                    <field name="x_partner_id" invisible="1"/>
+                    <field name="x_invoice_id" context="{'form_view_ref': 'account.invoice_form'}" domain="[('partner_id', '=', x_partner_id)]"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
