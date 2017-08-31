@@ -1,0 +1,160 @@
+<?xml version="1.0" ?>
+<odoo>
+    <template id="openeducat_lms.course_detail">
+        <t t-call="website.layout">
+            <ol class="breadcrumb bg-trang MB0 MT-20">
+                <li><a href="/">Trang chủ</a></li>
+                <li class="active"><a href="/courses">Khóa học</a></li>
+            </ol>
+
+            <section class="row">
+                <aside class="col-md-9">
+                    <div class="box-bor">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <img t-if="not course.image" 
+                                    t-attf-src="/openeducat_lms/static/src/img/channel-default.jpg" 
+                                    class="img-responsive"/>
+                                <img t-if="course.image" 
+                                    t-attf-src="/web/image/op.course/#{course.id}/image" 
+                                    class="img-responsive"/>
+                            </div>
+
+                            <div class="col-md-7">
+                                <h3 class="MB5 MT0" t-esc="course.name"></h3>
+                                <p class="text-a">
+                                    Giáo viên:
+                                    <t t-foreach="course.faculty_ids" t-as="faculty">
+                                        <span t-raw="faculty.name"/>
+                                    </t>
+                                </p>
+
+                                <div class="row">
+                                    <p class="col-md-3">Giá</p>
+
+                                    <p class="col-md-9">
+                                        <t t-if="course.type == 'free'">
+                                            <b class="text-danger">FREE</b>
+                                        </t>
+
+                                        <t t-if="course.type == 'paid'">
+                                            <span class="giacu" t-esc="course.product_id.website_price * 2" 
+                                                t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+
+                                            <b class="text-danger" t-esc="course.product_id.website_price * 2" 
+                                                t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                        </t>
+                                    </p>
+                                </div>
+
+                                <div class="row">
+                                    <p class="col-md-3">Bao gồm</p>
+
+                                    <p class="col-md-9">
+                                        100h video<br/>
+                                        35 bộ tài liệu<br/>
+                                        50 bài giảng<br/>
+                                        Giảm 50% học cụ
+                                    </p>
+                                </div>
+
+                                <div class="row">
+                                    <p class="col-md-3">Mã giả giá</p>
+                                    <p class="col-md-9"><b>robot2017</b></p>
+                                </div>
+
+                                <div class="row">
+                                    <p class="col-md-9 col-md-offset-3">
+                                        <a class="btn btn-danger" 
+                                            t-attf-href="/course/enroll/#{slug(course)}" 
+                                            t-if="not enrolled">
+                                            <i class="MR5 fa fa-calendar-check-o" aria-hidden="true"></i>
+                                            Đăng ký
+                                        </a>
+
+                                        <a class="btn btn-danger" 
+                                            t-attf-href="/course/#{slug(course)}"
+                                            t-if="completed_percentage == 0 and enrolled">
+                                            <i class="MR5 fa fa-calendar-check-o" aria-hidden="true"></i>
+                                            Bắt đầu học
+                                        </a>
+
+                                        <a class="btn btn-danger" 
+                                            t-attf-href="/course/#{slug(course)}"
+                                            t-if="completed_percentage">
+                                            <i class="MR5 fa fa-calendar-check-o" aria-hidden="true"></i>
+                                            Tiếp tục học
+                                        </a>
+                                    </p>
+                                </div>
+                    
+                            </div>
+                        </div>
+            
+                        <h3>Tổng quan</h3>
+                        <p t-raw="course.full_description"/>
+                        <hr/>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" href="/page/lich-khai-giang">
+                                    <i class="MR5 fa fa-calendar" aria-hidden="true"></i>
+                                    Lịch khai giảng
+                                </a>
+                                <a class="btn btn-danger" href="/page/contactus">
+                                    <i class="MR5 fa fa-calendar-check-o" aria-hidden="true"></i>
+                                    Đăng ký tư vấn
+                                </a>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="pull-right">
+                                    <a class="box-mang" href=""><i class="fa fa-facebook text-muted" aria-hidden="true"></i></a>
+                                    <a class="box-mang" href=""><i class="fa fa-google-plus text-muted" aria-hidden="true"></i></a>
+                                    <a class="box-mang" href=""><i class="fa fa-twitter text-muted" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+
+                        <div role="tabpanel">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#home1" data-toggle="tab" role="tab" aria-controls="tab1">Chương trình</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#paneTwo1" data-toggle="tab" role="tab" aria-controls="tab2">Giảng viên</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#course-comments" class="course-comments" data-toggle="tab" role="tab" aria-controls="tab2">Nhận xét</a>
+                                </li>
+                            </ul>
+
+                            <div id="tabContent1" class="tab-content padT15">
+                                <div role="tabpanel" class="tab-pane fade in active" id="home1">
+                                    <p>Content in <b>Tab Panel 1</b></p>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="paneTwo1">
+                                    <p>Content 2</p>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="course-comments">
+                                    <p>Content 3</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <aside class="col-md-3">
+                    <div class="box-bor">
+                        <h3 class="text-xanh1">
+                            <a href="">Tin tức</a>
+                        </h3>
+
+                        <div class="js_get_posts" data-loading="true" data-posts_limit="3" data-template="stem_frontend_theme.stem_home_posts"/>
+                    </div>
+                </aside>
+            </section>
+        </t>
+    </template>
+</odoo>

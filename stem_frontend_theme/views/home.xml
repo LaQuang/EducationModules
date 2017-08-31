@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!-- Latest posts's Template -->
+	    <template id="stem_home_posts">
+	        <t t-if="not posts">
+	            <div class="container readable">
+		            <div class="alert alert-warning alert-dismissible text-center" role="alert">
+		                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		                    <span aria-hidden="true">&#215;</span>
+		                </button>
+		                <h3>No posts here...</h3>
+		                <p>Please, be sure that your posts are not in draft state</p>
+		            </div>
+		        </div>
+	        </t>
+	        <t t-foreach="posts" t-as="p">
+	        	<t t-set="properties" t-value="json.loads(p.cover_properties)"/>
+	            <div class="MB20">
+	            	<img class="img-responsive MB5" t-attf-src="#{properties.get('background-image')[4:-1]}"/>
+
+	                <p>
+	      	 			<a class="text-justify text-link" t-att-href="'/blog/%s/post/%s' % (p.blog_id.id, p.id)">
+	      	 				<span t-field="p.name"/>
+	      	 			</a>
+	      	 		</p>
+	      	 		<p class="text-right">
+	      	 			<a t-att-href="'/blog/%s/post/%s' % (p.blog_id.id, p.id)">
+	      	 				Chi tiết &gt;&gt;
+	      	 			</a>
+	      	 		</p>
+	            </div>
+	        </t>
+	    </template>
+
+		<template id="stem_home" name="STEM Home">
+			<t t-call="website.layout">
+				<section class="row">
+  	  				<aside class="col-md-2">
+  	  					<div class="list-group">
+		  					<a href="#" class="list-group-item list-group-item1 border-B1" t-if="website.user_id != user_id">
+		  						<img class="img-circle MR5" src="/stem_frontend_theme/static/src/images/img2.png" width="32" alt=""/>
+		  						<t t-esc="(len(user_id.name)&gt;25) and (user_id.name[:23]+'...') or user_id.name"/>
+		  					</a>
+		  					<a href="#" class="list-group-item list-group-item1">
+		  						<i class="MR10 fa fa-file-text-o text-primary" aria-hidden="true"></i>
+		  						Bảng tin<span class="badge bg-pink">14</span>
+		  					</a>
+		  					<a href="#" class="list-group-item list-group-item1">
+		  						<i class="MR10 fa fa-commenting-o text-danger" aria-hidden="true"></i>
+		  						Tin nhắn<span class="badge bg-pink">14</span>
+		  					</a>
+		  					<a href="#" class="list-group-item list-group-item1">
+		  						<i class="MR10 fa fa-th-large text-success" aria-hidden="true"></i>
+		  						Khóa học
+		  					</a>
+		  					<a href="#" class="list-group-item list-group-item1">
+		  						<i class="MR10 fa fa-calendar text-danger" aria-hidden="true"></i>
+		  						Sự kiện<span class="badge bg-pink">14</span>
+		  					</a>
+		  					<a href="#" class="list-group-item list-group-item1">
+		  						<i class="MR10 fa fa-users text-info" aria-hidden="true"></i>
+		  						Nhóm
+		  					</a>
+		  					<a href="#" class="list-group-item list-group-item1">
+		  						<i class="MR10 fa fa-address-book-o text-warning" aria-hidden="true"></i>
+		  						Dánh sách bạn bè
+		  					</a>
+						</div>
+  	  				</aside>
+
+  	  				<aside class="col-md-7">
+		  				<div class="box-bor MB20">
+		  	    			<h3 class="text-xanh1">
+		  	    				<a href="#">Khóa học trực tuyến Miễn phí</a>
+		  	    			</h3>
+
+		  	    			<t t-foreach="online_free_courses" t-as="online_free_course">
+		  	    				<div class="MB20">
+		  	    					<img t-if="not online_free_course.image" t-attf-src="/openeducat_lms/static/src/img/channel-default.jpg" class="img-responsive" />
+                                	<img t-if="online_free_course.image" t-attf-src="/web/image/op.course/#{online_free_course.id}/image" class="img-responsive" />
+
+									<h4 class="MB5">
+										<a t-attf-href="/course-detail/#{slug(online_free_course)}"
+											t-esc="online_free_course.name"/>
+									</h4>
+									<p class="text-a">
+										Giáo viên:
+										<t t-foreach="online_free_course.faculty_ids"
+                                               t-as="faculty">
+                                        	<span t-raw="faculty.name"/>
+                                        </t>
+                                    </p>
+									<p class="text-a" t-raw="online_free_course.short_description"></p>
+									<p class="text-muted MB0">
+										<i class="MR5 fa fa-usd" aria-hidden="true"></i>
+										<span class="MR10 text-danger">FREE</span>
+										<i class="MR5 fa fa-eye" aria-hidden="true"></i>
+										<span class="MR10 text-primary">250</span>
+										<i class="MR5 fa fa-star-half-o" aria-hidden="true"></i>
+										<span class="text-vang">50</span>
+									</p>
+		  	    				</div>
+		  	    			</t>
+          				</div>
+
+        				<div class="box-bor MB20">
+	  	    				<h3 class="text-xanh1">
+	  	    					<a href="#">Khóa học được quan tâm nhiều nhất</a>
+	  	    				</h3>
+		  					<div id="carousel1" class="carousel slide" data-ride="carousel">
+			  					<div class="carousel-inner" role="listbox">
+			    					<div class="item active">
+		      	  						<div class="row">
+					  						<div class="col-md-4 text-center">
+						  						<a class="box3" href="1">
+													<img class="img-responsive MB5" src="/stem_frontend_theme/static/src/images/mh4.jpg" alt=""/>
+													<span class="text-den">STEM Robotics</span>
+													<span class="bt-chitiet">Chi tiết &gt;&gt;</span>
+						  						</a>
+					  						</div>
+
+	      	  								<div class="col-md-4 text-center">
+						  						<a class="box3" href="1">
+													<img class="img-responsive MB5" src="/stem_frontend_theme/static/src/images/mh4.jpg" alt=""/>
+													<span class="text-den">STEM Robotics</span>
+													<span class="bt-chitiet">Chi tiết &gt;&gt;</span>
+						  						</a>
+					  						</div>
+
+	      	  								<div class="col-md-4 text-center">
+						  						<a class="box3" href="1">
+													<img class="img-responsive MB5" src="/stem_frontend_theme/static/src/images/mh4.jpg" alt=""/>
+													<span class="text-den">STEM Robotics</span>
+													<span class="bt-chitiet">Chi tiết &gt;&gt;</span>
+						  						</a>
+					  						</div>
+		      	  						</div>
+		      	  
+		        					</div>
+		        
+			    					<div class="item">
+	        							<div class="row">
+					  						<div class="col-md-4 text-center">
+						  						<a class="box3" href="1">
+													<img class="img-responsive MB5" src="/stem_frontend_theme/static/src/images/mh4.jpg" alt=""/>
+													<span class="text-den">STEM Robotics</span>
+													<span class="bt-chitiet">Chi tiết &gt;&gt;</span>
+						  						</a>
+					  						</div>
+
+	      	  								<div class="col-md-4 text-center">
+						  						<a class="box3" href="1">
+													<img class="img-responsive MB5" src="/stem_frontend_theme/static/src/images/mh4.jpg" alt=""/>
+													<span class="text-den">STEM Robotics</span>
+													<span class="bt-chitiet">Chi tiết &gt;&gt;</span>
+						  						</a>
+					  						</div>
+
+	      	  								<div class="col-md-4 text-center">
+						  						<a class="box3" href="1">
+													<img class="img-responsive MB5" src="/stem_frontend_theme/static/src/images/mh4.jpg" alt=""/>
+													<span class="text-den">STEM Robotics</span>
+													<span class="bt-chitiet">Chi tiết &gt;&gt;</span>
+						  						</a>
+					  						</div>
+		      	  						</div>
+		        					</div>
+
+			    					<div class="item">
+				  						<div class="row">
+					  						<div class="col-md-4 text-center">
+						  						<a class="box3" href="1">
+													<img class="img-responsive MB5" src="/stem_frontend_theme/static/src/images/mh4.jpg" alt=""/>
+													<span class="text-den">STEM Robotics</span>
+													<span class="bt-chitiet">Chi tiết &gt;&gt;</span>
+						  						</a>
+					  						</div>
+
+	      	  								<div class="col-md-4 text-center">
+						  						<a class="box3" href="1">
+													<img class="img-responsive MB5" src="/stem_frontend_theme/static/src/images/mh4.jpg" alt=""/>
+													<span class="text-den">STEM Robotics</span>
+													<span class="bt-chitiet">Chi tiết &gt;&gt;</span>
+						  						</a>
+					  						</div>
+
+	      	  								<div class="col-md-4 text-center">
+						  						<a class="box3" href="1">
+													<img class="img-responsive MB5" src="/stem_frontend_theme/static/src/images/mh4.jpg" alt=""/>
+													<span class="text-den">STEM Robotics</span>
+													<span class="bt-chitiet">Chi tiết &gt;&gt;</span>
+						  						</a>
+					  						</div>
+		      	  						</div>
+		        					</div>
+		    					</div>
+
+			  					<a class="left carousel-control" href="#carousel1" role="button" data-slide="prev">
+			  						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			  						<span class="sr-only">Previous</span>
+			  					</a>
+			  					<a class="right carousel-control" href="#carousel1" role="button" data-slide="next">
+			  						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			  						<span class="sr-only">Next</span>
+			  					</a>
+			  				</div>
+          				</div>
+
+          				<div class="box-bor">
+	  	    				<h3 class="text-xanh1">
+	  	    					<a href="">Khóa học trực tuyến Miễn phí</a>
+	  	    				</h3>
+	  	    				<img class="img-responsive" src="/stem_frontend_theme/static/src/images/mh3.png" alt=""/>
+							<h4 class="MB5">
+								<a href="">Thiết kế Kỹ thuật Sáng tạo</a>
+							</h4>
+							<p class="text-a">
+								Giáo viên: <span>Nguyễn Tiến</span>
+							</p>
+							<p class="text-a">
+								Mô tả ngắn gọn khóa học...Mô tả ngắn gọn khóa học...
+							</p>
+							<p class="text-muted MB0">
+								<i class="MR5 fa fa-usd" aria-hidden="true"></i>
+								<span class="MR10 text-danger">PAID</span>
+								<i class="MR5 fa fa-eye" aria-hidden="true"></i>
+								<span class="MR10 text-primary">250</span>
+								<i class="MR5 fa fa-star-half-o" aria-hidden="true"></i>
+								<span class="text-vang">50</span>
+							</p>
+          				</div>
+      				</aside>
+
+      				<aside class="col-md-3">
+      	 				<div class="box-bor">
+      	 					<h3 class="text-xanh1">
+      	 						<a href="">Tin tức</a>
+      	 					</h3>
+
+      	 					<div class="js_get_posts" data-loading="true" data-posts_limit="3" data-template="stem_frontend_theme.stem_home_posts"/>
+      	 				</div>
+      				</aside>
+    			</section>
+			</t>
+		</template>
+	</data>
+</odoo>
