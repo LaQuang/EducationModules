@@ -1,0 +1,45 @@
+
+.s_latest_posts .media.media_list_template {
+    .pull-left {
+        box-sizing: content-box;
+        width: 100%;
+        height: 200px;
+
+        @media (min-width: @screen-sm-min) {
+            width: 200px;
+            height: 150px;
+        }
+
+        > a {
+            width: 100%;
+            height: 100%;
+
+            > .o_blog_cover_container {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                padding: 0;
+
+                > .o_blog_cover_component {
+                    .o-position-absolute(0, 0, 0, 0);
+                }
+                > .o_blog_cover_image {
+                    background-size: cover;
+                    background-position: center;
+                }
+            }
+        }
+    }
+}
+
+.MB20 {
+    margin-bottom: 20px;
+}
+
+.btn-xanh {
+    background-color: #fff;
+    color: #18b618;
+    border: solid 1px #18b618;
+    border-radius: 40px;
+    padding: 3px 20px;
+}
